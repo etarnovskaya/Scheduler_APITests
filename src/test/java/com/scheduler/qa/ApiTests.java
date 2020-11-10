@@ -21,9 +21,9 @@ public class ApiTests {
     JsonElement token = parsed.getAsJsonObject().get("token");
     JsonElement status = parsed.getAsJsonObject().get("status");
     JsonElement registration = parsed.getAsJsonObject().get("registration");
-    System.out.println(token);
-//    System.out.println(status);
-//    System.out.println(registration);
+    System.out.println("token =>" + token);
+    System.out.println("status => " + status);
+   System.out.println("is registration =>" + registration);
 
     Assert.assertFalse(registration.getAsBoolean());
     Assert.assertEquals(status.toString(), "\"Login success\"");
@@ -34,7 +34,8 @@ public class ApiTests {
     String email = "userQA23_api_1@gmail.com";
     String password =  "Aa1234567";
     int statusCode = sendPostRequest("/api/login")
-            .bodyString("{\"email\": \"" + email + "\", \"password\": \"" + password + "\" }", ContentType.APPLICATION_JSON).execute().returnResponse().getStatusLine().getStatusCode();
+            .bodyString("{\"email\": \"" + email + "\", \"password\": \"" + password + "\" }"
+                    , ContentType.APPLICATION_JSON).execute().returnResponse().getStatusLine().getStatusCode();
     //System.out.println(responce);
     Assert.assertEquals(statusCode, 200);
   }
@@ -68,7 +69,8 @@ public class ApiTests {
 
   private String apiLoginOrRegistration(String email, String password) throws IOException {
     return sendPostRequest("/api/login")
-            .bodyString("{\"email\": \"" + email + "\", \"password\": \"" + password + "\" }", ContentType.APPLICATION_JSON)
+            .bodyString("{\"email\": \"" + email + "\", \"password\": \"" + password + "\" }",
+                    ContentType.APPLICATION_JSON)
             .execute()
             .returnContent()
             .asString();
